@@ -1,0 +1,42 @@
+.commonAlign{
+ 
+    margin-top: 11%;
+    position: fixed;
+    padding-left: 301px;
+    padding-right: 30px;
+}
+.alignLogin{
+
+       margin-top: 11%;
+       position: fixed;
+       margin-left: 17%
+}
+.alignAddBlog{
+  
+       margin-top: 11%;
+       position: fixed;
+       padding-left: 40%;
+       padding-right: 30px;
+   
+}
+
+.radio-spacing-addblog{
+  margin-top: -21px;
+  height: 58px;
+}
+.errMessageAddBlog{
+  color: red;
+  margin-bottom: 2rem;
+}
+#header{
+margin-top: 0%;
+position: fixed;
+height: 14%;
+width: 100%;
+overflow-x: hidden;
+z-index: 1;
+transition: 0.5s;
+}
+.cardSize{
+  width: 400px;
+}
