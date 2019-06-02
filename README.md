@@ -3,6 +3,12 @@ It is the blog manager application with user login features in react-redux.
 It is not a responsive web application.
 This is the demo for understanding the woek flow of reactJs with redux.
 
+To run
+npm install
+npm start
+
+The default page appears with 'Login Page'.
+
 Specification For Technology
 1.React JS
 2.Redux Structure
@@ -32,5 +38,6 @@ Specification For Technology
 	- Add Blog button is their on the top right of the blog list table which redirects to add blog page.
 	
 - Add Blog:-It helps to add new blog.
+- There is a logout link available on the right of the header for destroy the session and redirects to login page.
 
 	
