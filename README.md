@@ -4,8 +4,8 @@ It is not a responsive web application.
 This is the demo for understanding the woek flow of reactJs with redux.
 
 #Features
-  #User Registration with validation
-  #User Login with session
+  #User Registration with validation.
+  #User Login with session.
   #After login only an user can manage the blog and can do the following functionality.
   #Blog Dashboard:- After login, you will get all available blog.
                   -On click of each blog, a popup appears with blog name and it's description and the image is common for each blog(static image).
