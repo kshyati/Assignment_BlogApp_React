@@ -10,9 +10,9 @@ npm start
 The default page appears with 'Login Page'.
 
 Specification For Technology
-1.React JS
-2.Redux Structure
-3.Material Design Bootstrap React(MDBR) Component(for styling)
+1. React JS
+2. Redux Structure
+3. Material Design Bootstrap React(MDBR) Component(for styling)
 
 #Features Of Blog Application
 -----------------------------
