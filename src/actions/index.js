@@ -16,15 +16,14 @@ export const LOG_OUT = 'log_out';
 export const ADD_COMMENT = 'add_comment';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const DELETE_COMMENT = 'delete_comment';
+export const ADD_LIKE = 'add_like';
 
 
 
 
 
-const ROOT_URL = 'https://reduxblog.herokuapp.com/api'
-const API_KEY = '?key=PAPERCLIPMANISH1234';
 
-const apiUrl = 'http://localhost:3000';
+const apiUrl = 'http://localhost:7000';
 var getToken = localStorage.getItem('%temp%');
 
 var header = {
@@ -66,8 +65,8 @@ export function userLogin(values, callback) {
     const request = axios.post(`${apiUrl}/user/userLogin`, values)
         .then((res) => callback(res),
         (error) => {
-           console.log(error)
-           callback(error)
+            console.log(error)
+            callback(error)
         })
     console.log(request)
     return {
@@ -78,6 +77,10 @@ export function userLogin(values, callback) {
 
 //Fatch Blogs
 export const fetchAllBlog = (values) => dispatch => {
+    const header = {
+        'Content-Type': 'application/json',
+        'x-auth': values
+    };
     axios.get(`${apiUrl}/blog/getAllBlog`, { headers: header })
         .then(res => {
             const request = res.data.data;
@@ -199,4 +202,16 @@ export function deleteComment(id, callback) {
 }
 
 
+//Add like for comment
+export function addLike(id, values, callback) {
+    console.log('like Id---')
+    console.log(header, id);
+    const request = axios.post(`${apiUrl}/comment/addLikeDislike`,values, { params: { id }, headers: header })
+        .then((res) => callback(res));
+
+    return {
+        type: ADD_LIKE,
+        payload: request
+    }
+}
 
