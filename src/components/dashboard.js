@@ -3,7 +3,7 @@ import { MDBRow, MDBCol, MDBCard, MDBCardBody, MDBMedia, MDBIcon, MDBMask, MDBCo
 import CommentInbox from '../components/comment';
 import '../assets/css/common.css';
 import { connect } from 'react-redux';
-import { fetchAllBlog, fetchBlogById, addComment, fetchAllComments, deleteComment } from '../actions';
+import { fetchAllBlog, fetchBlogById, addComment, fetchAllComments, deleteComment, addLike } from '../actions';
 import _ from 'lodash';
 import Header from '../components/header';
 import SideBar from '../components/sideBar';
@@ -22,7 +22,8 @@ class Dashboard extends Component {
       commentDescription: '',
       comments: [],
       isLike: null,
-      isEdit: false
+      isEdit: false,
+      posts: []
     };
   }
 
@@ -40,10 +41,13 @@ class Dashboard extends Component {
     });
   }
   commonFetchComments = () => {
+    const userId = localStorage.getItem('%ud%');
     const values =
       {
-        "blogId": this.state.currentID
-      }
+        "blogId": this.state.currentID,
+        "userId": userId
+      };
+
     this.props.fetchAllComments(values, (res) => {
       this.setState({
         comments: res.data.data
@@ -79,8 +83,23 @@ class Dashboard extends Component {
   changeHandlerComment = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   }
-  changeHandlerLike = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+  changeHandlerLike = (event, cId, isLike) => {
+    const userId = localStorage.getItem('%ud%');
+    if (isLike === undefined) {
+      isLike = true;
+    }
+    else {
+      if (isLike) isLike = false;
+      else isLike = true;
+    }
+    const values = {
+      "isLike": isLike,
+      "userId": userId,
+      "blogId": this.state.currentID
+    }
+    this.props.addLike(cId, values, (res) => {
+      this.commonFetchComments();
+    });
   }
   editCommentHandler = (event, commentId) => {
     if (this.state.isEdit) {
@@ -104,9 +123,11 @@ class Dashboard extends Component {
       description: nr.description,
       currentID: nr._id
     });
+    const userId = localStorage.getItem('%ud%');
     const values =
       {
-        "blogId": nr._id
+        "blogId": nr._id,
+        "userId": userId
       }
     if (!this.state.deleteAlert) {
       this.props.fetchAllComments(values, (res) => {
@@ -151,10 +172,12 @@ class Dashboard extends Component {
                   <span>{comment.description}</span>
               }
               <span className="float-right">
-                {/* <MDBIcon icon="pencil-alt" size="1x" className="indigo-text pr-3 " onClick={(e) => this.deleteCommentHandler(e, comment._id)} />
-                <MDBIcon icon="thumbs-up" size="1x" value={this.state.isLike} className="green-text pr-3 " onChange={this.changeHandlerLike} />{comment.totalLikeCount}&nbsp;&nbsp;&nbsp; */}
-                {/* <MDBIcon icon="thumbs-up" size="1x" value={this.state.isLike} className="red-text pr-3 " onChange={this.changeHandlerLike} />{comment.totalLikeCount}&nbsp;&nbsp;&nbsp; */}
-                {/* <MDBIcon icon="thumbs-down" size="1x" />&nbsp;&nbsp;&nbsp;{comment.totalDislikeCount}&nbsp;&nbsp;&nbsp; */}
+                {/* <MDBIcon icon="pencil-alt" size="1x" className="indigo-text pr-3 " onClick={(e) => this.editCommentHandler(e, comment._id)} />  */}
+                {
+                  comment.isUser === true ? <MDBIcon icon="thumbs-up" size="1x" value={comment.isUser} className="green-text pr-3 " onClick={(e) => this.changeHandlerLike(e, comment._id, comment.isUser)} />
+                    :
+                    <MDBIcon icon="thumbs-down" size="1x" value={comment.isUser} className="red-text pr-3 " onClick={(e) => this.changeHandlerLike(e, comment._id, comment.isUser)} />
+                }
                 <MDBIcon icon="trash-alt" size="1x"
                   onClick={(e) => this.deleteCommentHandler(e, comment._id)} className="red-text pr-3" />
               </span>
@@ -262,4 +285,4 @@ function mapStateToProps(state) {
     posts: state.posts.allBlog
   };
 }
-export default connect(mapStateToProps, { fetchAllBlog, fetchAllComments, fetchBlogById, addComment, deleteComment })(Dashboard);
+export default connect(mapStateToProps, { fetchAllBlog, addLike, fetchAllComments, fetchBlogById, addComment, deleteComment })(Dashboard);
