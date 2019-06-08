@@ -17,6 +17,7 @@ class Logout extends React.Component {
     componentWillMount() {
         this.props.userLogOut((res) => {
             localStorage.clear('%temp%');
+            localStorage.clear('%ud%');
             this.props.history.push('');
         });
     }
