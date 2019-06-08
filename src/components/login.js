@@ -33,7 +33,8 @@ class LoginPage extends Component {
     };
     this.props.userLogin(userDetails, (res) => {
       if(res.data){
-        localStorage.setItem('%temp%', res.data.data);
+        localStorage.setItem('%temp%', res.data.data.token);
+        localStorage.setItem('%ud%', res.data.data.userId);
         this.props.history.push('/home');
       }
       else{
