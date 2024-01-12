@@ -1,4 +1,4 @@
-# Assignment_BlogApp_React
+# Blog Application in React
 It is the blog manager application with user login features in react-redux.
 It is not a responsive web application.
 This is the demo for understanding the woek flow of reactJs with redux.
